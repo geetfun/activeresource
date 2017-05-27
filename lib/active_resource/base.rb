@@ -931,18 +931,11 @@ module ActiveResource
         options = arguments.slice!(0) || {}
 
         case scope
-        when :all
-          find_every(options)
-        when :first
-          collection = find_every(options)
-          collection && collection.first
-        when :last
-          collection = find_every(options)
-          collection && collection.last
-        when :one
-          find_one(options)
-        else
-          find_single(scope, options)
+          when :all   then find_every(options)
+          when :first then find_every(options).to_a.first
+          when :last  then find_every(options).to_a.last
+          when :one   then find_one(options)
+          else             find_single(scope, options)
         end
       end
 
